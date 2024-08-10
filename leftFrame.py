@@ -137,47 +137,16 @@ def left_frame_before_bet(self):
         command=self.bet_click,
     )
     self.BET_BUTTON.grid(
-        row=5,
-        column=0,
-        pady=settings.PAD_Y_LEFT_FRAME,
-    )
-
-
-def half_amount(self):
-    self.bet_amount.set(self.bet_amount.get() * 0.5)
-
-
-def double_amount(self):
-    self.bet_amount.set(self.bet_amount.get() * 2)
-
-
-def change_num_of_mines(n):
-    settings.NUMBER_OF_MINES = int(n.get())
-
-
-def left_frame_after_bet(self):
-    # shifting the BET button to 8th row (at the end)
-    self.BET_BUTTON.grid(
         row=8,
         column=0,
         pady=settings.PAD_Y_LEFT_FRAME,
     )
 
-    self.BET_BUTTON.configure(text="Cashout")
-
     # -------------------Total Profit Label----------------------------
     self.total_profit_label = ctk.CTkLabel(
         master=self.left_frame,
-        text="Total profit(1.00x)",
+        text="Total profit (1.00x)",
         font=(self.font, settings.FONT_SIZE)
-    )
-
-    self.total_profit_label.grid(
-        row=5,
-        column=0,
-        padx=settings.PAD_X_LEFT_FRAME,
-        pady=settings.PAD_Y_LEFT_FRAME,
-        sticky='W'
     )
 
     # ---------------------Total Profit Entry--------------------------
@@ -195,16 +164,7 @@ def left_frame_after_bet(self):
         # state=ctk.DISABLED
     )
 
-    self.total_profit_entry.grid(
-        row=6,
-        column=0,
-        pady=settings.PAD_Y_LEFT_FRAME,
-    )
-    # disable the user to make changes to the entry
-    self.total_profit_entry.configure(state=ctk.DISABLED)
-
-
-#     -----------------Pick random tile--------------------------------
+    # -----------------Pick random tile--------------------------------
     self.pick_random_tile = ctk.CTkButton(
         self.left_frame,
         height=utils.any_prct(settings.BET_AMOUNT_FRAME_HEIGHT, 75),
@@ -218,17 +178,57 @@ def left_frame_after_bet(self):
         command=self.pick_random_tile_,
     )
 
+
+def half_amount(self):
+    self.bet_amount.set(self.bet_amount.get() * 0.5)
+
+
+def double_amount(self):
+    self.bet_amount.set(self.bet_amount.get() * 2)
+
+
+def change_num_of_mines(n):
+    settings.NUMBER_OF_MINES = int(n.get())
+
+
+def placing_left_frame_elements_after_placing_bet(self):
+    self.BET_BUTTON.configure(text="Cashout")
+
+    # --------------Total Profit Label---------------------------
+    self.total_profit_label.grid(
+        row=5,
+        column=0,
+        padx=settings.PAD_X_LEFT_FRAME,
+        pady=settings.PAD_Y_LEFT_FRAME,
+        sticky='W'
+    )
+
+    self.root.update()
+
+    # --------------------Total Profit Entry------------------------
+    self.total_profit_entry.grid(
+        row=6,
+        column=0,
+        pady=settings.PAD_Y_LEFT_FRAME,
+    )
+    # disable the user to make changes to the entry
+    self.total_profit_entry.configure(state=ctk.DISABLED)
+
+    self.root.update()
+
+#   -----------------Pick random tile-------------------------------
     self.pick_random_tile.grid(
         row=7,
         column=0,
         pady=settings.PAD_Y_LEFT_FRAME,
     )
+    self.root.update()
 
-#     -----------------changing the colours of widgets---------------------
+#   -----------------changing the colours of widgets---------------------
     self.mines_amount_dd_menu.configure(fg_color=settings.BET_PLACED_LEFT_FRAME_CLR)
     self.mines_amount_dd_menu.configure(button_color=settings.BET_PLACED_LEFT_FRAME_CLR)
 
-#     ------------------disable the widgets--------------------------------
+#   ------------------disable the widgets--------------------------------
     self.bet_amount_entry.configure(state=ctk.DISABLED)
     self.half_amount_btn.configure(state=ctk.DISABLED)
     self.double_amount_btn.configure(state=ctk.DISABLED)
@@ -237,11 +237,14 @@ def left_frame_after_bet(self):
 
 
 def reset_left_frame(self):
-    # destroy the elements which are not needed
-    # self.total_profit_label.destroy()
-    # self.total_profit_entry.destroy()
-    # self.pick_random_tile.destroy()
-    # degrid the widgets that are not needed
+    """
+    Resets the left frame as it was before placing the bet
+    :param self:
+    """
+    # change the test from "Cashout" to "Bet"
+    self.BET_BUTTON.configure(text="Bet")
+
+    # de-grid the widgets that are not needed
     self.total_profit_label.grid_forget()
     self.total_profit_entry.grid_forget()
     self.pick_random_tile.grid_forget()
@@ -249,10 +252,8 @@ def reset_left_frame(self):
 
     # activate the required elements
     self.bet_amount_entry.configure(state=ctk.NORMAL)
-    self.half_amount_btn.configure(state=ctk.ACTIVE)
-    self.double_amount_btn.configure(state=ctk.ACTIVE)
-    self.mines_amount_dd_menu.configure(state=ctk.ACTIVE)
-    self.BET_BUTTON.configure(state=ctk.ACTIVE)
-
-    self.BET_BUTTON.configure(text="Bet")
+    self.half_amount_btn.configure(state=ctk.NORMAL)
+    self.double_amount_btn.configure(state=ctk.NORMAL)
+    self.mines_amount_dd_menu.configure(state=ctk.NORMAL)
+    self.BET_BUTTON.configure(state=ctk.NORMAL)
 

@@ -46,7 +46,7 @@ class Win:
         )
         self.left_frame.grid_propagate(False)  # Prevent frame from resizing based on content
 
-        # creates the left frame as desired before placing a bet
+        # creates the left frame, as desired, before placing a bet
         leftFrame.left_frame_before_bet(self)
 
         self.right_frame = ctk.CTkFrame(
@@ -62,16 +62,23 @@ class Win:
             y=utils.height_prct(0)
         )
 
+        right_frame_height = self.right_frame.cget("height")
+        right_frame_width = self.right_frame.cget("width")
         self.cells_frame = ctk.CTkFrame(
             master=self.right_frame,
-            height=utils.height_prct_of_right_frame(75),
-            width=utils.width_prct_of_right_frame(75),
+            height=utils.any_prct(right_frame_height, 75),
+            width=utils.any_prct(right_frame_width, 75),
             fg_color=settings.CELLS_FRAME_CLR
         )
 
+        cells_frame_height = self.cells_frame.cget("height")
+        cells_frame_width = self.cells_frame.cget("width")
+        x_coord = right_frame_width - cells_frame_width
+        y_coord = right_frame_height - cells_frame_height
+
         self.cells_frame.place(
-            x=utils.center_frame_width_prct(80),
-            y=utils.center_frame_height_prct(20)
+            x=utils.any_prct(x_coord, 80),
+            y=utils.any_prct(y_coord, 20)
         )
 
         self.cells(state=True)  # state=True means we need the cells to be of tk.DISABLED
@@ -100,7 +107,7 @@ class Win:
         if settings.FIRST_CLICK:
             settings.FIRST_CLICK = False
             settings.GAME_OVER = False
-            leftFrame.left_frame_after_bet(self)
+            leftFrame.placing_left_frame_elements_after_placing_bet(self)
             self.new_bet()
 
         # when cashout
@@ -115,7 +122,7 @@ class Win:
             settings.GAME_OVER = False
             cells.Cells.show_cells_and_disable()
             # cells.Cells.probability_change()
-            leftFrame.left_frame_after_bet(self)
+            leftFrame.placing_left_frame_elements_after_placing_bet(self)
 
             self.new_bet()
 
@@ -143,15 +150,6 @@ class Win:
         cells.Cells.all = []
         # creates new cells
         self.cells()
-        #
-        # self.mine_hit = cells.Cells.all[0].mine_hit
-        # self.mine_hit.trace_add("write", self.mine_hit_)
-
-        # leftFrame.left_frame_after_bet(self)
-
-    # def mine_hit_(self, *args):
-    #     print("in mine hit")
-    #     self.bet_click()
 
     def pick_random_tile_(self):
 

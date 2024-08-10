@@ -33,7 +33,6 @@ mine_image_small = ctk.CTkImage(
 
 class Cells:
     all = []
-    # probabilities = settings.PROBABILITIES.copy()
     probabilities = [1 / (settings.CELLS_IN_ROW ** 2)] * (settings.CELLS_IN_ROW**2)  # probability of individual cell to have a mine
     clicked_cells = []  # clicked cells
 
@@ -69,9 +68,11 @@ class Cells:
 
     def cell_click(self):
         Cells.clicked_cells.append(self)
+
         self.cell_btn_object.configure(hover=False)
         self.cell_btn_object.configure(fg_color=settings.CELL_CLICK_CLR)
-        self.bet_btn.configure(state=ctk.ACTIVE)
+        # change the state of the bet button to NORMAL/ACTIVE after opening at least one cell
+        self.bet_btn.configure(state=ctk.NORMAL)
         # self.cell_btn_object.update()
 
         if self.isMine:
@@ -169,8 +170,7 @@ class Cells:
                     p_cpy.pop(index)
                     break
 
-
-        print(f"{mines = }")
+        # print(f"{mines = }")
         for mine in mines:
             mine.isMine = True
 
