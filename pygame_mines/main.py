@@ -1,3 +1,6 @@
+import os
+import time
+
 import pygame
 pygame.init()
 from sys import exit
@@ -17,12 +20,14 @@ class Mines:
         self.cm = cells.CellsMain(self.win)
         self.cells_sprites = self.cm.cells_sprites
         self.cell_clr = settings.CELL_FG_COLOUR
+        self.frame_rect = None
 
         clr = settings.BLUE_GRAY
         text = "1.00"
         # leftFrame.bet_amount_text.convert_alpha()
         dropdown_open = False
         leftFrame.config()
+        frame = None
 
         while True:
             self.clock.tick(60)
@@ -64,9 +69,13 @@ class Mines:
                         mouse_pos = pygame.mouse.get_pos()
 
                         if leftFrame.bet_btn_rect.collidepoint(mouse_pos):
+                            # Checkout when at least one cell is opened
                             if settings.GEMS_CLICKED:
-                                print("game over")
                                 cells.CellsMain.game_over = not cells.CellsMain.game_over
+
+                                settings.checkout_sound.play(maxtime=settings.maxtime)
+                                utils.is_sound_playing()
+
                                 self.cm.cells_sprites.sprites()[0].display_and_disable_cells()
 
                         else:
@@ -75,6 +84,7 @@ class Mines:
                                     cell.animation_on = 1
                                     cell.clicked = True
                                     if not cell.isMine: settings.GEMS_CLICKED += 1
+                                    else: self.get_frame_rect(cell, frame := 0)
 
                 else:
 
@@ -89,18 +99,20 @@ class Mines:
                         if leftFrame.bet_btn_rect.collidepoint(mouse_pos):
                             # Start new game
                             if not dropdown_open:
-                                print("game not over")
+                                frame = None
                                 cells.CellsMain.game_over = not cells.CellsMain.game_over
                                 self.cm.update()
+
+                                settings.start_bet_sound.play(maxtime=settings.maxtime)
+                                utils.is_sound_playing()
+
                                 self.cells_sprites = self.cm.cells_sprites
 
                         # clicking on the button to change the number of mines
                         if leftFrame.numofmines_dd_head_rect.collidepoint(mouse_pos):
                             dropdown_open = True
-                            print("dd open")
                         else:
                             dropdown_open = False
-                            print("dd close")
 
                     if event.type == pygame.KEYUP and clr == settings.BLACK:
                         if event.key == pygame.K_RETURN:
@@ -116,6 +128,15 @@ class Mines:
             # self.win.blit(self.left_part_surf, self.left_part_rect)
             self.cells_sprites.update()
 
+            if frame is not None:
+                if frame >= len(settings.gif_frames):
+                    frame = 0
+                self.win.blit(settings.gif_frames[frame], self.frame_rect)
+                # draw the mine above the gif
+                mine_rect = settings.MINE_IMAGE.get_rect(center=self.frame_rect.center)
+                self.win.blit(settings.MINE_IMAGE, mine_rect)
+                frame += 1
+
             leftFrame.blit_in_seq(self.win, clr, cells.CellsMain.game_over, text, dropdown_open)
 
             pygame.display.update()
@@ -128,6 +149,9 @@ class Mines:
 
         self.left_part_surf.fill(settings.LEFT_PART_COLOUR)
         self.left_part_rect = self.left_part_surf.get_rect(topleft=(0, 0))
+
+    def get_frame_rect(self, cell, frame):
+        self.frame_rect = settings.gif_frames[frame].get_rect(center=cell.rect.center)
 
 
 if __name__ == "__main__":

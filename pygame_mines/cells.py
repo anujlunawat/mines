@@ -1,6 +1,7 @@
 import random
 import pygame
 import settings
+import utils
 
 
 class CellsMain:
@@ -29,7 +30,6 @@ class CellsMain:
 
     def probability_change(self):
         # clear the probabilities list
-        print(self.clicked_cells)
         if not len(self.clicked_cells):
             return
         self.probabilities.clear()
@@ -81,7 +81,6 @@ class CellsMain:
                     p_cpy.pop(index)
                     break
 
-        # print(f"{mines = }")
         for mine in mines:
             mine.isMine = True
 
@@ -97,10 +96,6 @@ class CellsMain:
 
         self.clicked_cells.clear()
         settings.GEMS_CLICKED = 0
-
-        print(f"{CellsMain.probabilities = }")
-
-
 
 
 class Cells(pygame.sprite.Sprite):
@@ -174,6 +169,18 @@ class Cells(pygame.sprite.Sprite):
         CellsMain.clicked_cells.append(self)
         # uncomment the line below for a cool look
         # self.cell_colour = settings.CELL_CLICK_CLR
+        self.play_sound()
+
+    def play_sound(self):
+        if self.isMine:
+            settings.mine_sound.play(maxtime=settings.maxtime)
+            utils.is_sound_playing()
+        elif settings.GEMS_CLICKED > settings.RISKY_DIAMOND_N:
+            settings.risky_diamond_sound.play(maxtime=settings.maxtime)
+            utils.is_sound_playing()
+        else:
+            settings.diamond_sound.play(maxtime=settings.maxtime)
+            utils.is_sound_playing()
 
     def show_cell_contents(self):
         if not self.active:

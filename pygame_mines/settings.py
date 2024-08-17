@@ -3,6 +3,7 @@ import os
 import pygame.image, pygame.freetype
 import utils
 import multipliers
+import gifFrames
 
 info = pygame.display.Info()
 WIDTH = info.current_w
@@ -59,8 +60,8 @@ BET_INPUT_BTN_CLR = "#0f212e"
 IMAGE_SIZE = (80, 80)
 IMAGE_SIZE_SMALL = (60, 60)
 
-gem_image = Image.open(os.path.join("assets", "gem1.png"))
-mine_image = Image.open(os.path.join("assets", "mine1.png"))
+gem_image = Image.open(os.path.join("assets", "images", "gem1.png"))
+mine_image = Image.open(os.path.join("assets", "images", "mine1.png"))
 
 # loading normal gem image
 mode = gem_image.mode
@@ -74,8 +75,8 @@ size = mine_image.size
 data = mine_image.tobytes()
 MINE_IMAGE = pygame.image.fromstring(data, size, mode)
 
-gem_image_small = Image.open(os.path.join("assets", "gem_small.png"))
-mine_image_small = Image.open(os.path.join("assets", "mine_small.png"))
+gem_image_small = Image.open(os.path.join("assets", "images", "gem_small.png"))
+mine_image_small = Image.open(os.path.join("assets", "images", "mine_small.png"))
 gem_enhancer = ImageEnhance.Brightness(gem_image_small)
 mine_enhancer = ImageEnhance.Brightness(mine_image_small)
 defocused_gem_image = gem_enhancer.enhance(factor=0.5)
@@ -108,5 +109,17 @@ LEFT_FRAME_PADDING = 10
 LEFT_WIN_HEIGHT = 50
 LEFT_WIN_WIDTH = int(utils.any_prct(utils.any_prct(WIDTH, 25), 90))
 
+# load music
+maxtime = 0  # the maxtime the sound will play (in ms) (0 for playing the full sound)
+RISKY_DIAMOND_N = 7
+start_bet_sound = pygame.mixer.Sound(os.path.join("assets", "sounds", "Start bet button.mp3"))
+checkout_sound = pygame.mixer.Sound(os.path.join("assets", "sounds", "Checkout.mp3"))
+diamond_sound = pygame.mixer.Sound(os.path.join("assets", "sounds", "Diamond.mp3"))
+mine_sound = pygame.mixer.Sound(os.path.join("assets", "sounds", "Mine.mp3"))
+risky_diamond_sound = pygame.mixer.Sound(os.path.join("assets", "sounds", "Risky Diamond.mp3"))
+
 # multiplier file
 MULTIPLIER = multipliers.f()
+
+# load the frames of mine gif
+gif_frames = gifFrames.load_images_from_directory(os.path.join("assets", "images", "frames"), "frame_")
