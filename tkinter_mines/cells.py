@@ -5,6 +5,7 @@ import customtkinter as ctk
 import random
 import settings
 import threading
+
 # loading the images of gem and mine
 gem_image = ctk.CTkImage(
     light_image=settings.GEM_IMAGE,
@@ -88,6 +89,8 @@ class Cells:
         self.cell_btn_object.configure(bg_color="red")
         self.cell_btn_object.configure(image=mine_image)
 
+        # bet lost += 1
+        # settings.LOSSES += 1
         Cells.show_cells_and_disable()
         Cells.probability_change()
 

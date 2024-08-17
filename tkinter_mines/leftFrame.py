@@ -115,7 +115,7 @@ def left_frame_before_bet(self):
         dropdown_fg_color=settings.CELL_CLICK_CLR,
         button_color=settings.CELL_CLICK_CLR,
         hover=False,
-        variable=self.num_of_mines,
+        variable=self.num_of_mines_dd,
         # dropdown_font=(self.font, settings.FONT_SIZE)
     )
 

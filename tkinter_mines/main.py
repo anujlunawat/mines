@@ -113,6 +113,8 @@ class Win:
         # when cashout
         elif not self.bet_on.get():
             settings.GAME_OVER = True
+            # if you cashout, that means you have won
+            # settings.WINS += 1
             cells.Cells.probability_change()
             cells.Cells.show_cells_and_disable()
             leftFrame.reset_left_frame(self)
@@ -150,6 +152,8 @@ class Win:
         cells.Cells.all = []
         # creates new cells
         self.cells()
+        print(f"{settings.WINS = }")
+        print(f"{settings.LOSSES = }")
 
     def pick_random_tile_(self):
 
