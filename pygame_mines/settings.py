@@ -96,11 +96,12 @@ MINE_IMAGE_SMALL = pygame.image.fromstring(data, size, mode)
 
 # font
 FONT_STYLE = pygame.freetype.STYLE_STRONG
-FONT_SIZE = 2
+FONT_SIZE = 3
 # FONT_PATH = os.path.join("assets", "Font", "DejaVuSansMono.ttf")
-FONT_PATH = os.path.join("assets", "Font", "healtheweb-typeface-main", "healtheweb-typeface-main", "HealTheWebA-Regular.otf")
+FONT_PATH = os.path.join("assets", "Font", "YatraOne-Regular.ttf")
+# FONT_PATH = os.path.join("assets", "Font", "healtheweb-typeface-main", "healtheweb-typeface-main", "HealTheWebA-Regular.otf")
 FONT = pygame.freetype.Font(FONT_PATH, FONT_SIZE, resolution=800)
-FONT_SMALL = pygame.freetype.Font(FONT_PATH, 12)
+FONT_SMALL = pygame.freetype.Font(FONT_PATH, 15)
 FONT_COLOUR = (255, 255, 255)
 
 # left part surfaces/rects settings
