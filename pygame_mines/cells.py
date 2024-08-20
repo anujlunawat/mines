@@ -229,6 +229,3 @@ class Cells(pygame.sprite.Sprite):
         self.display_cell()
         self.animate()
         self.show_cell_contents()
-
-
-

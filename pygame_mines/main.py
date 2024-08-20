@@ -1,6 +1,3 @@
-import os
-import time
-
 import pygame
 pygame.init()
 from sys import exit
@@ -23,7 +20,7 @@ class Mines:
         self.frame_rect = None
 
         clr = settings.BLUE_GRAY
-        text = "1.00"
+        text = "0.00"
         # leftFrame.bet_amount_text.convert_alpha()
         dropdown_open = False
         leftFrame.config()
@@ -36,21 +33,6 @@ class Mines:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-
-                # if event.type == pygame.MOUSEBUTTONUP and event.button == pygame.BUTTON_LEFT:
-                #     mouse_pos = pygame.mouse.get_pos()
-                #
-                #     if leftFrame.bet_btn_rect.collidepoint(mouse_pos):
-                #         # Start new game
-                #         if cells.CellsMain.game_over:
-                #             print("game not over")
-                #             cells.CellsMain.game_over = not cells.CellsMain.game_over
-                #             self.cm.update()
-                #             self.cells_sprites = self.cm.cells_sprites
-                #         elif settings.GEMS_CLICKED:
-                #             print("game over")
-                #             cells.CellsMain.game_over = not cells.CellsMain.game_over
-                #             self.cm.cells_sprites.sprites()[0].display_and_disable_cells()
 
                 if not cells.CellsMain.game_over:
 
@@ -80,7 +62,8 @@ class Mines:
 
                         else:
                             for cell in self.cells_sprites:
-                                if cell.active and cell.rect.collidepoint(mouse_pos) and not self.cm.cell_animation_on:
+                                # if cell.active and cell.rect.collidepoint(mouse_pos) and not self.cm.cell_animation_on:
+                                if cell.active and cell.rect.collidepoint(mouse_pos):
                                     cell.animation_on = 1
                                     cell.clicked = True
                                     if not cell.isMine: settings.GEMS_CLICKED += 1
@@ -137,7 +120,7 @@ class Mines:
                 self.win.blit(settings.MINE_IMAGE, mine_rect)
                 frame += 1
 
-            leftFrame.blit_in_seq(self.win, clr, cells.CellsMain.game_over, text, dropdown_open)
+            leftFrame.blit_in_seq(self.win, clr, cells.CellsMain.game_over, text if text else '0', dropdown_open)
 
             pygame.display.update()
 
