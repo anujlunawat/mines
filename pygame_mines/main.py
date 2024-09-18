@@ -131,7 +131,7 @@ class Mines:
         )).convert_alpha()
 
         self.left_part_surf.fill(settings.LEFT_PART_COLOUR)
-        self.left_part_rect = self.left_part_surf.get_rect(topleft=(0, 0))
+        self.left_part_rect = self.left_part_surf.get_rect(topleft=(0, utils.height_prct(settings.WALLET_HEIGHT)))
 
     def get_frame_rect(self, cell, frame):
         self.frame_rect = settings.gif_frames[frame].get_rect(center=cell.rect.center)

@@ -5,6 +5,8 @@ import utils
 import multipliers
 import gifFrames
 
+WALLET_HEIGHT = 12
+
 info = pygame.display.Info()
 WIDTH = info.current_w
 HEIGHT = info.current_h
@@ -31,7 +33,7 @@ LEFT_SPACE_FOR_CELLS = 220 + 360
 # since the cells are square shaped, they require the same amount of height, as they require width(640)
 # since height = 720, required height on both sided = (720 - 640) / 2 = 40
 # should have been 40, but I increased CELL_PAD_Y by 5. so TOP_SPACE_FOR_CELLS becomes 30
-TOP_SPACE_FOR_CELLS = 30
+TOP_SPACE_FOR_CELLS = utils.height_prct(WALLET_HEIGHT)
 
 # left part widgets settings
 rect_border_rad = 7
@@ -106,7 +108,7 @@ FONT_COLOUR = (255, 255, 255)
 
 # left part surfaces/rects settings
 LEFT_PART_x = 10
-LEFT_PART_y = 15
+LEFT_PART_y = 15 + utils.height_prct(WALLET_HEIGHT)
 LEFT_FRAME_PADDING = 10
 LEFT_WIN_HEIGHT = 50
 LEFT_WIN_WIDTH = int(utils.any_prct(utils.any_prct(WIDTH, 25), 90))

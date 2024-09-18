@@ -148,7 +148,7 @@ def total_profit_(surface, game_over, text):
         )
         # the amount to be displayed in the rect
         profit_amount_text = settings.FONT.render(
-            f"{float(text) * float(total_p.strip('x'))}",
+            f"{float(text) * float(total_p.strip('x')) : .2f}",
             settings.FONT_COLOUR,
             # settings.LEFT_PART_COLOUR,
             style=settings.FONT_STYLE
